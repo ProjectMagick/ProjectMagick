@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DisclosureCell" rowHeight="64" id="jFQ-Lr-HTT" customClass="DisclosureCell" customModule="ProjectMagick">
+            <rect key="frame" x="0.0" y="0.0" width="443" height="64"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jFQ-Lr-HTT" id="k0c-kb-cYM">
+                <rect key="frame" x="0.0" y="0.0" width="443" height="64"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EmH-6j-SsU">
+                        <rect key="frame" x="15" y="10" width="413" height="44"/>
+                        <subviews>
+                            <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPk-9X-gvP">
+                                <rect key="frame" x="-24" y="15" width="24" height="14"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccn-mE-vC2" customClass="PaddingLabel" customModule="ProjectMagick">
+                                <rect key="frame" x="0.0" y="22" width="367" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q42-4t-R14">
+                                <rect key="frame" x="377" y="6.5" width="36" height="31"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system"/>
+                            </button>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="EmH-6j-SsU" secondAttribute="trailing" constant="15" id="E2A-Pq-yYI"/>
+                    <constraint firstItem="EmH-6j-SsU" firstAttribute="top" secondItem="k0c-kb-cYM" secondAttribute="top" constant="10" id="f3A-pT-i6h"/>
+                    <constraint firstItem="EmH-6j-SsU" firstAttribute="leading" secondItem="k0c-kb-cYM" secondAttribute="leading" constant="15" id="rLy-2d-T7S"/>
+                    <constraint firstAttribute="bottom" secondItem="EmH-6j-SsU" secondAttribute="bottom" constant="10" id="sqi-so-fWS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="btnDisclosure" destination="Q42-4t-R14" id="lYo-fn-UyD"/>
+                <outlet property="btnIconImage" destination="CPk-9X-gvP" id="OAN-1h-hHr"/>
+                <outlet property="lblTitle" destination="Ccn-mE-vC2" id="J7y-P5-gKt"/>
+                <outlet property="stackMain" destination="EmH-6j-SsU" id="8Qj-al-pqA"/>
+            </connections>
+            <point key="canvasLocation" x="145.6521739130435" y="84.375"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
+    </resources>
+</document>
