@@ -8,20 +8,37 @@ public enum TextPickerViewType {
     case date, strings
 }
 
-@objc public protocol TextPickerViewDelegate: AnyObject {
+public protocol TextPickerViewDelegate: AnyObject {
     // date picker delegate
-    @objc optional func textPickerView(_ textPickerView: TextPickerView, didSelectDate date: Date)
+    func textPickerView(_ textPickerView: TextPickerView, didSelectDate date: Date)
     
     // strings picker delegate
-    @objc optional func textPickerView(_ textPickerView: TextPickerView, didSelectString row: Int)
-    func textPickerView(_ textPickerView: TextPickerView, titleForRow row: Int) -> String?
+    func textPickerView(_ textPickerView: TextPickerView, didSelectString row: Int, forComponent component: Int)
+    func textPickerView(_ textPickerView: TextPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
 }
+
+extension TextPickerViewDelegate {
+    
+    func textPickerView(_ textPickerView: TextPickerView, didSelectDate date: Date) {}
+    func textPickerView(_ textPickerView: TextPickerView, didSelectString row: Int, forComponent component: Int) {}
+    
+}
+
 
 public protocol TextPickerDataSource: AnyObject {
-    func numberOfRows(in pickerView: TextPickerView) -> Int
+    func numberOfRows(in pickerView: TextPickerView, in component: Int) -> Int
+    func numberOfComponents(in pickerView: TextPickerView) -> Int
 }
 
-public class TextPickerView: UITextField {
+extension TextPickerDataSource {
+    
+    func numberOfComponents(in pickerView: TextPickerView) -> Int {
+        1
+    }
+    
+}
+
+open class TextPickerView: UITextField {
     
     // MARK: public properties
     public var type: TextPickerViewType = .strings {
@@ -70,8 +87,19 @@ public class TextPickerView: UITextField {
                 dateChanged(picker)
             }
         default:
-            if let index = dataPicker?.selectedRow(inComponent: 0) {
-                pickerDelegate?.textPickerView?(self, didSelectString: index)
+            if (dataPicker?.numberOfComponents ?? 0) > 1 {
+                var text = ""
+                for index in 0...((dataPicker?.numberOfComponents ?? 0) - 1) {
+                    if let selectedIndexRow = dataPicker?.selectedRow(inComponent: index) {
+                        let titles = pickerDelegate?.textPickerView(self, attributedTitleForRow: selectedIndexRow, forComponent: index)
+                        text += " \(titles?.string ?? "")"
+                    }
+                }
+                self.text = text.trimmingCharacters(in: .whitespaces)
+            } else {
+                if let index = dataPicker?.selectedRow(inComponent: 0) {
+                    pickerDelegate?.textPickerView(self, didSelectString: index, forComponent: 0)
+                }
             }
         }
         resignFirstResponder()
@@ -105,7 +133,7 @@ public class TextPickerView: UITextField {
     
     
     @objc func dateChanged(_ sender : UIDatePicker) {
-        pickerDelegate?.textPickerView?(self, didSelectDate: sender.date)
+        pickerDelegate?.textPickerView(self, didSelectDate: sender.date)
     }
     
     
@@ -124,24 +152,25 @@ public class TextPickerView: UITextField {
 extension TextPickerView: UIPickerViewDataSource {
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        return pickerDataSource?.numberOfComponents(in: self) ?? 1
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerDataSource?.numberOfRows(in: self) ?? 0
+        return pickerDataSource?.numberOfRows(in: self, in: component) ?? 0
     }
 }
 
 extension TextPickerView: UIPickerViewDelegate {
     
     public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        
-        let string = pickerDelegate?.textPickerView(self, titleForRow: row)
-        return NSAttributedString(string: string!, attributes: [NSAttributedString.Key.foregroundColor:UIColor.black])
+        pickerDelegate?.textPickerView(self, attributedTitleForRow: row, forComponent: component)
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        pickerDelegate?.textPickerView?(self, didSelectString: row)
+        if pickerView.numberOfComponents > 1 {
+            return
+        }
+        pickerDelegate?.textPickerView(self, didSelectString: row, forComponent: component)
     }
     
 }
