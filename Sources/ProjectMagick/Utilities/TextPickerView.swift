@@ -17,7 +17,7 @@ public protocol TextPickerViewDelegate: AnyObject {
     func textPickerView(_ textPickerView: TextPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
 }
 
-extension TextPickerViewDelegate {
+public extension TextPickerViewDelegate {
     
     func textPickerView(_ textPickerView: TextPickerView, didSelectDate date: Date) {}
     func textPickerView(_ textPickerView: TextPickerView, didSelectString row: Int, forComponent component: Int) {}
@@ -30,7 +30,7 @@ public protocol TextPickerDataSource: AnyObject {
     func numberOfComponents(in pickerView: TextPickerView) -> Int
 }
 
-extension TextPickerDataSource {
+public extension TextPickerDataSource {
     
     func numberOfComponents(in pickerView: TextPickerView) -> Int {
         1
