@@ -61,14 +61,18 @@ open class TextPickerView: UITextField {
     
     
     // MARK: init methods
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
+        initialize()
+    }
+    
+    open override func awakeFromNib() {
+        super.awakeFromNib()
         initialize()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initialize()
     }
     
     private func initialize() {
