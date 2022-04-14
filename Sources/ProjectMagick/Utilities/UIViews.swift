@@ -582,8 +582,8 @@ public extension UITableView {
     /// - Parameters:
     ///   - nib: Nib file used to create the header or footer view.
     ///   - name: UITableViewHeaderFooterView type.
-    func register<T: UITableViewHeaderFooterView>(nibWithHeaderFooterCellClass name: T.Type, at bundle: Bundle? = nil) {
-        let identifier = String(describing: name)
+    func register<T: UITableViewHeaderFooterView>(nibWithHeaderFooterCellClass className: T.Type, at bundle: Bundle? = nil) {
+        let identifier = String(describing: className)
         register(UINib(nibName: identifier, bundle: bundle), forHeaderFooterViewReuseIdentifier: String(describing: identifier))
     }
 
@@ -633,8 +633,8 @@ public extension UITableView {
     /// - Parameters:
     ///   - name: UITableViewCell type.
     ///   - bundle: On which the Bundle instance will be based on.
-    func register<T: UITableViewCell>(nibWithCellClass name: T.Type, at bundle: Bundle? = nil) {
-        let identifier = String(describing: name)
+    func register<T: UITableViewCell>(nibWithCellClass className: T.Type, at bundle: Bundle? = nil) {
+        let identifier = String(describing: className)
         register(UINib(nibName: identifier, bundle: bundle), forCellReuseIdentifier: identifier)
     }
 
@@ -1023,9 +1023,9 @@ public extension UICollectionView {
     ///   - nib: Nib file used to create the reusable view.
     ///   - kind: the kind of supplementary view to retrieve. This value is defined by the layout object.
     ///   - bundle: On which the Bundle instance will be based on.
-    func register<T: UICollectionReusableView>(nibWithReusableCellClass name: T.Type, forSupplementaryViewOfKind kind: String, at bundle: Bundle? = nil) {
-        let identifier = String(describing: name)
-        register(UINib(nibName: identifier, bundle: bundle), forSupplementaryViewOfKind: kind, withReuseIdentifier: String(describing: name))
+    func register<T: UICollectionReusableView>(nibWithReusableCellClass className: T.Type, forSupplementaryViewOfKind kind: String, at bundle: Bundle? = nil) {
+        let identifier = String(describing: className)
+        register(UINib(nibName: identifier, bundle: bundle), forSupplementaryViewOfKind: kind, withReuseIdentifier: String(describing: className))
     }
     
 
@@ -1052,8 +1052,8 @@ public extension UICollectionView {
     /// - Parameters:
     ///   - name: UICollectionViewCell type.
     ///   - bundle: On which the Bundle instance will be based on.
-    func register<T: UICollectionViewCell>(nibWithCellClass name: T.Type, at bundle: Bundle? = nil) {
-        let identifier = String(describing: name)
+    func register<T: UICollectionViewCell>(nibWithCellClass className: T.Type, at bundle: Bundle? = nil) {
+        let identifier = String(describing: className)
         register(UINib(nibName: identifier, bundle: bundle), forCellWithReuseIdentifier: identifier)
     }
 
