@@ -194,9 +194,6 @@ open class PaddingLabel: UILabel {
     public var bottomInset: CGFloat = 5.0
     public var leftInset: CGFloat = 7.0
     public var rightInset: CGFloat = 7.0
-    public var borderColor : UIColor = .clear
-    public var borderWidth : CGFloat = 1
-    public var cornerRadius : CGFloat = 5
     
     open override func drawText(in rect: CGRect) {
         let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
@@ -217,9 +214,6 @@ open class PaddingLabel: UILabel {
     }
     
     open override func draw(_ rect: CGRect) {
-        layer.borderColor = borderColor.cgColor
-        layer.borderWidth = borderWidth
-        layer.cornerRadius = cornerRadius
         layer.masksToBounds = true
         super.draw(rect)
     }

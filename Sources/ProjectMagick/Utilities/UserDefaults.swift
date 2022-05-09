@@ -86,6 +86,11 @@ public struct UserDefault<Value : Codable> {
 //            publisher.send(newValue)
         }
     }
+    
+    public init(key : String, defaultValue : Value) {
+        self.key = key
+        self.defaultValue = defaultValue
+    }
 }
 
 public extension UserDefault where Value : ExpressibleByNilLiteral {

@@ -138,4 +138,14 @@ public class DeviceDetail: NSObject {
         }
         return address ?? ""
     }
+    
+    /** Returns screen height */
+    public static height : CGFloat {
+        UIScreen.main.bounds.height
+    }
+    
+    /** Returns screen width */
+    public static width : CGFloat {
+        UIScreen.main.bounds.height
+    }
 }
