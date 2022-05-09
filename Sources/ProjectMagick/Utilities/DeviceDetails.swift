@@ -140,12 +140,12 @@ public class DeviceDetail: NSObject {
     }
     
     /** Returns screen height */
-    public static height : CGFloat {
+    public static var height : CGFloat {
         UIScreen.main.bounds.height
     }
     
     /** Returns screen width */
-    public static width : CGFloat {
+    public static var width : CGFloat {
         UIScreen.main.bounds.height
     }
 }
