@@ -40,6 +40,8 @@ public extension AlertMessages {
     static let noFaceIdentityEnrolled = "There is no face enrolled in the device. Please go to Device Settings -> Face ID & Passcode and enroll your face."
     static let defaultFaceIDAuthenticationFailedReason = "Face ID does not recognize your face. Please try again with your enrolled face."
     static let noDataAvailable = "No data available!"
+    static let noEmailSetup = "Please configure your email account first."
+    static let carriesServiceNotAvailable = "Carrier service is not available."
 }
 
 public enum SmallTitles {

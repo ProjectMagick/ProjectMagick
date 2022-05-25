@@ -157,4 +157,16 @@ public extension Encodable {
         return nil
     }
     
+    func toString() -> String? {
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let dictionary = try encoder.encode(self)
+            return String(data: dictionary, encoding: .utf8)
+        } catch let err {
+            print(err)
+        }
+        return nil
+    }
+    
 }

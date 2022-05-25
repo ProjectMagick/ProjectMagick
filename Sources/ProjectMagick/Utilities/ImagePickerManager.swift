@@ -85,6 +85,7 @@ open class ImagePickerManager: UIView {
             AVCaptureDevice.requestAccess(for: .video) { (response) in
                 if response == (AVCaptureDevice.authorizationStatus(for: .video) == .authorized) {
                     DispatchQueue.main.async {
+                        self.imagePicker.sourceType = .camera
                         vc.present(self.imagePicker, animated: true)
                     }
                 }
@@ -124,6 +125,7 @@ open class ImagePickerManager: UIView {
                         if #available(iOS 14, *) {
                             vc.present(self.pickerViewController(), animated: true)
                         } else {
+                            self.imagePicker.sourceType = .photoLibrary
                             vc.present(self.imagePicker, animated: true)
                         }
                     }

@@ -8,6 +8,7 @@
 
 import UIKit
 import FittedSheets
+import MessageUI
 
 //MARK:- Utility Functions
 public extension UIViewController {
@@ -160,19 +161,86 @@ public extension UIViewController {
         snackbar.animationType = .slideFromTopBackToTop
         snackbar.show()
     }
+    
+    func sendEmailTo(mailId : [String] = [], ccIDs : [String]? = nil, bccIDs : [String]? = nil, subject : String = "", messageBody : (String, isHTML : Bool) = ("", false), errorMessage : String = "") {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(mailId)
+            mail.setCcRecipients(ccIDs)
+            mail.setBccRecipients(bccIDs)
+            mail.setMessageBody(messageBody.0, isHTML: messageBody.1)
+            mail.setSubject(subject)
+            UIApplication.topViewController()?.present(mail, animated: true)
+        } else {
+            showSnackBar(errorMessage.isEmpty ? AlertMessages.noEmailSetup : errorMessage)
+        }
+    }
+    
+    func sendTextMessageTo(this numbers : [String], body : String = "", errorMessage : String = "") {
+        
+        var phoneNumber : [String] = []
+        numbers.forEach {
+            let number = makeValidNumber($0)
+            phoneNumber.append(number)
+        }
+        if MFMessageComposeViewController.canSendText() {
+            let controller = MFMessageComposeViewController()
+            controller.body = body
+            controller.recipients = phoneNumber
+            controller.messageComposeDelegate = self
+            UIApplication.topViewController()?.present(controller, animated: true, completion: nil)
+        }
+        else {
+            showSnackBar(errorMessage.isEmpty ? AlertMessages.carriesServiceNotAvailable : errorMessage)
+        }
+    }
+    
+    func shareFromNativeActivityVC(items : [Any]) {
+        let vc = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        vc.popoverPresentationController?.sourceView = view
+        UIApplication.topViewController()?.present(vc, animated: true)
+    }
+    
+    private func makeValidNumber(_ phoneNumber : String) -> String {
+        var number : String = phoneNumber
+//        number = number.replacingOccurrences(of: "+", with: "")
+        number = number.replacingOccurrences(of: " ", with: "").trimmed
+        return number
+    }
+    
+}
+
+// MARK: - MFMessageComposeViewController Delegate
+extension UIViewController : MFMailComposeViewControllerDelegate {
+    
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+    
+}
+
+
+// MARK: - MFMessageComposeViewController Delegate
+extension UIViewController : MFMessageComposeViewControllerDelegate {
+    
+    public func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 @discardableResult
 public func ShowAlert(title: String?, message: String?, buttonTitles: [String]? = nil, highlightedButtonIndex: Int? = nil, completion: ((Int) -> Void)? = nil) -> UIAlertController {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let alertController = UIAlertController(title: title?.localized(), message: message?.localized(), preferredStyle: .alert)
     var allButtons = buttonTitles ?? [String]()
     if allButtons.count == 0 {
-        allButtons.append(SmallTitles.ok)
+        allButtons.append(SmallTitles.ok.localized())
     }
     
     for index in 0..<allButtons.count {
         let buttonTitle = allButtons[index]
-        let action = UIAlertAction(title: buttonTitle, style: .default, handler: { (_) in
+        let action = UIAlertAction(title: buttonTitle.localized(), style: .default, handler: { (_) in
             completion?(index)
         })
         alertController.addAction(action)

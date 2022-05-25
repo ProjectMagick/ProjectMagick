@@ -78,6 +78,7 @@ open class TextPickerView: UITextField {
     private func initialize() {
         addDoneOnKeyboardWithTarget(self, action: #selector(doneClicked), titleText: SmallTitles.done)
         updatePickerType()
+        toolbarPlaceholder = placeholder
     }
     
     @objc func cancelClicked() {
